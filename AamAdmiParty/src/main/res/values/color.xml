@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tab_menu_color">#222222</color>
+    <color name="tab_pressed_color">#4C4C4C</color>
+    
+    <color name="history_theme_color_opq">#DF6945</color>
+    <color name="arvind_theme_color_opq">#9EC514</color>
+    <color name="leaders_theme_color_opq">#338BEF</color>
+    <color name="path_b_news_theme_color_opq">#E71F0F</color>
+    <color name="camp_innovation_theme_color_opq">#197B4C</color>
+    <color name="ls_14_theme_color_opq">#842E75</color>
+    <color name="aap_celebs_theme_color_opq">#FF6F16</color>
+    <color name="jokes_theme_color_opq">#E8295C</color>
+    
+    <color name="history_theme_color">#B9DF6945</color>
+    <color name="arvind_theme_color">#B99EC514</color>
+    <color name="leaders_theme_color">#B9338BEF</color>
+    <color name="path_b_news_theme_color">#B9E71F0F</color>
+    <color name="camp_innovation_theme_color">#B9197B4C</color>
+    <color name="ls_14_theme_color">#B9842E75</color>
+    <color name="aap_celebs_theme_color">#B9FF6F16</color>
+    <color name="jokes_theme_color">#B9E8295C</color>
+    
+    <color name="white">#FFFFFF</color>
+    <color name="light_grey">#E5E4E2</color>
+</resources>
