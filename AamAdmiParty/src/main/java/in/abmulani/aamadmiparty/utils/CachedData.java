@@ -3,30 +3,32 @@ package in.abmulani.aamadmiparty.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.abmulani.aamadmiparty.datamodels.Result;
+import in.abmulani.aamadmiparty.datamodels.ResultContent;
+import in.abmulani.aamadmiparty.datamodels.ResultJokes;
+import in.abmulani.aamadmiparty.datamodels.ResultVideo;
 
 public class CachedData {
 
-	public static List<Result> ArvindList=new ArrayList<Result>();
-	public static List<Result> HistoryList=new ArrayList<Result>();
-	public static List<Result> CampaignInovationList=new ArrayList<Result>();
-	public static List<Result> CelebratiesList=new ArrayList<Result>();
-	public static List<Result> JokesList=new ArrayList<Result>();
-	public static List<Result> LeadersList=new ArrayList<Result>();
-	public static List<Result> LS_14List=new ArrayList<Result>();
-	public static List<Result> PathBreakingList=new ArrayList<Result>();
-	public static List<Result> PoliciesList=new ArrayList<Result>();
-	
+	public static List<ResultContent> arvindList=new ArrayList<ResultContent>();
+	public static List<ResultContent> historyList=new ArrayList<ResultContent>();
+	public static List<ResultContent> campaignInovationList=new ArrayList<ResultContent>();
+	public static List<ResultContent> celebratiesList=new ArrayList<ResultContent>();
+	public static List<ResultJokes> jokesList=new ArrayList<ResultJokes>();
+	public static List<ResultContent> leadersList=new ArrayList<ResultContent>();
+	public static List<ResultContent> ls_14List=new ArrayList<ResultContent>();
+	public static List<ResultContent> pathBreakingList=new ArrayList<ResultContent>();
+	public static List<ResultContent> policiesList=new ArrayList<ResultContent>();
+    public static List<ResultVideo> videosList=new ArrayList<ResultVideo>();
 	
 	public static void ClearCache(){
-		ArvindList.clear();
-		HistoryList.clear();
-		CampaignInovationList.clear();
-		CelebratiesList.clear();
-		JokesList.clear();
-		LeadersList.clear();
-		LS_14List.clear();
-		PathBreakingList.clear();
-		PoliciesList.clear();
+		arvindList.clear();
+		historyList.clear();
+		campaignInovationList.clear();
+		celebratiesList.clear();
+		jokesList.clear();
+		leadersList.clear();
+		ls_14List.clear();
+		pathBreakingList.clear();
+		policiesList.clear();
 	}
 }

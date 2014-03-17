@@ -11,6 +11,8 @@
     <color name="ls_14_theme_color_opq">#842E75</color>
     <color name="aap_celebs_theme_color_opq">#FF6F16</color>
     <color name="jokes_theme_color_opq">#E8295C</color>
+    <color name="policies_theme_color_opq">#3f4c6b</color>
+    <color name="videos_theme_color_opq">#febf04</color>
     
     <color name="history_theme_color">#B9DF6945</color>
     <color name="arvind_theme_color">#B99EC514</color>
@@ -20,7 +22,10 @@
     <color name="ls_14_theme_color">#B9842E75</color>
     <color name="aap_celebs_theme_color">#B9FF6F16</color>
     <color name="jokes_theme_color">#B9E8295C</color>
+    <color name="policies_theme_color">#B93f4c6b</color>
+    <color name="videos_theme_color">#B9febf04</color>
     
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="light_grey">#E5E4E2</color>
 </resources>
