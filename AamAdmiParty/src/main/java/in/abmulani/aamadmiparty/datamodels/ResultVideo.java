@@ -11,12 +11,10 @@ public class ResultVideo {
     @Expose
     private String created_on;
     @Expose
-    private String post_id;
+    private String id;
     @Expose
     private String title;
-    @Expose
     private String extra1;
-    @Expose
     private String extra2;
 
     public String getExtra2() {
@@ -28,11 +26,11 @@ public class ResultVideo {
     }
 
     public String getPost_id() {
-        return post_id;
+        return id;
     }
 
     public void setPost_id(String post_id) {
-        this.post_id = post_id;
+        this.id = post_id;
     }
 
     public String getTitle() {
@@ -65,5 +63,13 @@ public class ResultVideo {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    public String getVideo_url() {
+        return video_url;
+    }
+
+    public void setVideo_url(String video_url) {
+        this.video_url = video_url;
     }
 }

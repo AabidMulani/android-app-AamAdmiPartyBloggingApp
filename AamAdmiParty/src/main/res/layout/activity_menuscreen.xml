@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:padding="6dip"
+        android:padding="1dip"
         android:background="@drawable/header_gradiat"
         android:id="@+id/am_header">
 

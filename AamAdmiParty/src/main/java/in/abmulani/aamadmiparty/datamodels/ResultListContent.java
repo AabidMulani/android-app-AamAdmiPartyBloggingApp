@@ -8,14 +8,14 @@ import java.util.List;
 public class ResultListContent {
 
 	@Expose
-	private List<ResultContent> resultContent = new ArrayList<ResultContent>();
+	private List<ResultContent> result_Content = new ArrayList<ResultContent>();
 
 	public List<ResultContent> getResultContent() {
-		return resultContent;
+		return result_Content;
 	}
 
 	public void setResultContent(List<ResultContent> resultContent) {
-		this.resultContent = resultContent;
+		this.result_Content = resultContent;
 	}
 
 }

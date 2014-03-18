@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@color/light_grey"
+    android:layout_height="match_parent" >
 
-    <ListView
+    <com.markupartist.android.widget.PullToRefreshListView
         android:id="@+id/al_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
-    </ListView>
+        android:layout_below="@+id/al_sep_line"
+        android:background="@color/light_grey"
+        android:divider="@color/light_grey"
+        android:padding="5dip"
+        android:dividerHeight="5dip">
+    </com.markupartist.android.widget.PullToRefreshListView>
+
+    <View
+        android:id="@+id/al_sep_line"
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="#C7C7C7"/>
 
 </RelativeLayout>

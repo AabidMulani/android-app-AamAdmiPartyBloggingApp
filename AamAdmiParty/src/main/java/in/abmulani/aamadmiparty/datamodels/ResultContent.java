@@ -6,20 +6,18 @@ public class ResultContent {
 
 
     @Expose
-    private String image_url;
+    private String image_path;
     @Expose
     private String created_on;
     @Expose
-    private String post_id;
+    private String id;
     @Expose
     private String title;
     @Expose
     private String content;
     @Expose
     private String subheading;
-    @Expose
     private String extra1;
-    @Expose
     private String extra2;
 
     public String getExtra2() {
@@ -31,11 +29,11 @@ public class ResultContent {
     }
 
     public String getPost_id() {
-        return post_id;
+        return id;
     }
 
     public void setPost_id(String post_id) {
-        this.post_id = post_id;
+        this.id = post_id;
     }
 
     public String getTitle() {
@@ -79,10 +77,10 @@ public class ResultContent {
     }
 
     public String getImage_url() {
-        return image_url;
+        return image_path;
     }
 
     public void setImage_url(String image_url) {
-        this.image_url = image_url;
+        this.image_path = image_url;
     }
 }

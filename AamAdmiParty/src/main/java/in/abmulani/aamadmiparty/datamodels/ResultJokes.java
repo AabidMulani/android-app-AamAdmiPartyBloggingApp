@@ -10,12 +10,10 @@ public class ResultJokes {
     @Expose
     private String created_on;
     @Expose
-    private String post_id;
+    private String id;
     @Expose
     private String title;
-    @Expose
     private String extra1;
-    @Expose
     private String extra2;
 
     public String getExtra2() {
@@ -27,11 +25,11 @@ public class ResultJokes {
     }
 
     public String getPost_id() {
-        return post_id;
+        return id;
     }
 
     public void setPost_id(String post_id) {
-        this.post_id = post_id;
+        this.id = post_id;
     }
 
     public String getTitle() {

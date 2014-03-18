@@ -4,8 +4,7 @@
     android:id="@+id/igl_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
-    android:clickable="true">
+    android:padding="5dp">
 
     <in.abmulani.aamadmiparty.widgets.TitleTextView
         android:id="@+id/igl_name"

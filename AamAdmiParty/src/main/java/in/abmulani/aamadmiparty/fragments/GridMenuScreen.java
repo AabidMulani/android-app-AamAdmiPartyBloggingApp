@@ -2,6 +2,7 @@ package in.abmulani.aamadmiparty.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +17,10 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import in.abmulani.aamadmiparty.R;
+import in.abmulani.aamadmiparty.activities.ListActivity;
 import in.abmulani.aamadmiparty.datamodels.MenuScreenModels;
 import in.abmulani.aamadmiparty.utils.AppConstants;
+import in.abmulani.aamadmiparty.utils.Logger;
 
 /**
  * Created by AABID on 17/3/14.
@@ -49,9 +52,10 @@ public class GridMenuScreen extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent =new Intent(getActivity(), ListActivity.class);
-//                intent.putExtra("selected",AppConstants.menuList.get(position).getCategory());
-//                startActivity(intent);
+                Logger.e("OnClick","Detected");
+                Intent intent =new Intent(getActivity(), ListActivity.class);
+                intent.putExtra("selected",AppConstants.menuList.get(position).getCategory());
+                startActivity(intent);
             }
         });
     }
@@ -87,15 +91,17 @@ public class GridMenuScreen extends Fragment {
             RelativeLayout layout;
             if (v == null) {
                 v = inflater.inflate(R.layout.inflater_grid_layout, viewGroup, false);
-                v.setTag(R.id.igl_image, v.findViewById(R.id.igl_image));
-                v.setTag(R.id.igl_name, v.findViewById(R.id.igl_name));
-                v.setTag(R.id.igl_layout, v.findViewById(R.id.igl_layout));
+                picture = (ImageView) v.findViewById(R.id.igl_image);
+                name = (TextView) v.findViewById(R.id.igl_name);
+                layout = (RelativeLayout) v.findViewById(R.id.igl_layout);
+                v.setTag(R.id.igl_image, picture);
+                v.setTag(R.id.igl_name, name);
+                v.setTag(R.id.igl_layout, layout);
+            }else{
+                picture = (ImageView) v.getTag(R.id.igl_image);
+                name = (TextView) v.getTag(R.id.igl_name);
+                layout = (RelativeLayout) v.getTag(R.id.igl_layout);
             }
-
-            picture = (ImageView) v.getTag(R.id.igl_image);
-            name = (TextView) v.getTag(R.id.igl_name);
-            layout = (RelativeLayout) v.getTag(R.id.igl_layout);
-
             MenuScreenModels item = (MenuScreenModels) getItem(i);
             layout.setBackgroundDrawable(item.getColor());
             name.setText(item.getName());

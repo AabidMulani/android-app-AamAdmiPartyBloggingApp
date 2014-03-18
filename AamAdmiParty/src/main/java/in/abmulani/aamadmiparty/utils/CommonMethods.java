@@ -134,9 +134,9 @@ public class CommonMethods {
             case PathBreakingNews:
                 return resources.getColor(R.color.path_b_news_theme_color);
             case Policies:
-                return resources.getColor(R.color.ls_14_theme_color);
+                return resources.getColor(R.color.policies_theme_color);
             case Videos:
-                return resources.getColor(R.color.arvind_theme_color);
+                return resources.getColor(R.color.videos_theme_color);
         }
         return resources.getColor(R.color.tab_menu_color);
     }

@@ -1,14 +1,14 @@
 package in.abmulani.aamadmiparty;
 
-import android.app.Application;
 import android.graphics.Bitmap.CompressFormat;
 
 import com.bugsense.trace.BugSenseHandler;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.orm.SugarApp;
 
-public class BaseApplication extends Application {
+public class BaseApplication extends SugarApp {
 
 	public static int screenWidth;
 	public static int screenHeight;
