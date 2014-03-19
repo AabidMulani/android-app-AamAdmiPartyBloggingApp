@@ -19,7 +19,7 @@
     <View
         android:id="@+id/al_sep_line"
         android:layout_width="match_parent"
-        android:layout_height="1sp"
+        android:layout_height="2sp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="#C7C7C7"/>

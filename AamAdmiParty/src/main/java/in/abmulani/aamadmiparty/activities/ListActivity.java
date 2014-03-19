@@ -4,7 +4,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -97,6 +99,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
         selectedCategory = (CATEGORY) getIntent().getSerializableExtra("selected");
         updateActionBar();
         listView.setOnRefreshListener(this);
+        listView.setOnItemClickListener(this);
         options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.place_holder).showImageForEmptyUri(R.drawable.place_holder)
                 .showImageOnFail(R.drawable.ic_launcher).resetViewBeforeLoading(false).cacheInMemory(true).cacheOnDisc(true).build();
         readFromDatabaseFirst();
@@ -213,7 +216,16 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Logger.d(TAG, "onItemClick");
-
+        position--;
+        if(selectedCategory== CATEGORY.Videos){
+            Logger.d("YouTube Video Url",contentVideoList.get(position).getVideo_url());
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(contentVideoList.get(position).getVideo_url())));
+        }else {
+            Intent intent = new Intent(ListActivity.this, DetailedViewActivity.class);
+            intent.putExtra("position", position);
+            intent.putExtra("category", selectedCategory);
+            startActivity(intent);
+        }
     }
 
     @Override

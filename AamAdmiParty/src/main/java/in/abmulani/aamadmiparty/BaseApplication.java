@@ -22,5 +22,6 @@ public class BaseApplication extends SugarApp {
 				.discCacheSize(50 * 1024 * 1024).discCacheFileCount(100).writeDebugLogs().build();
 		ImageLoader.getInstance().init(config);
 	}
-	
+
+
 }

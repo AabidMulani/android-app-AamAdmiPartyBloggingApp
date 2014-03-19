@@ -28,4 +28,5 @@ dependencies {
     compile files('library/bugsense-3.6.jar')
     compile project(':PullToRefreshLibrary')
     compile project(':PhotoViewLibrary')
+    compile project(':SlidingUpPanel')
 }

@@ -3,10 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    <View
+        android:id="@+id/al_sep_line"
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="#C7C7C7"/>
 
-    <android.support.v4.view.ViewPager
+    <in.abmulani.aamadmiparty.widgets.CustomViewPager
         android:id="@+id/adsl_viewpager"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/al_sep_line"/>
 
 </RelativeLayout>

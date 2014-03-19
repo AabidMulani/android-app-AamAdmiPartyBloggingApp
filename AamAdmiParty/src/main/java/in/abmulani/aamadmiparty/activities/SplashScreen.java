@@ -27,6 +27,8 @@ public class SplashScreen extends Activity{
 		setContentView(R.layout.activity_splash_screen);
 		shadow=(RelativeLayout) findViewById(R.id.ass_shadow_layout);
 		shadow.setVisibility(View.INVISIBLE);
+        BaseApplication.screenWidth=getWindowWidth();
+        BaseApplication.screenHeight=getWindowHeight();
 		fadeIn = new AlphaAnimation(0, 1);
         Log.e("Logging","Start");
 		fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
@@ -43,8 +45,7 @@ public class SplashScreen extends Activity{
 			@Override
 			public void onAnimationEnd(Animation arg0) {
 				shadow.setVisibility(View.VISIBLE);
-				BaseApplication.screenWidth=getWindowWidth();
-				BaseApplication.screenHeight=getWindowHeight();
+
 				new Handler().postDelayed(nextScreen, 1000);
 			}
 		});
@@ -60,19 +61,19 @@ public class SplashScreen extends Activity{
 			finish();
 		}
 	};
-	
-	/** Gets Width width */
-	private int getWindowWidth() {
-		DisplayMetrics metrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		return metrics.widthPixels;
-	}
-	/** Gets Width height */
-	private int getWindowHeight() {
-		DisplayMetrics metrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		return metrics.heightPixels;
-	}
-	
-	
+
+    /** Gets Width width */
+    private int getWindowWidth() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return metrics.widthPixels;
+    }
+    /** Gets Width height */
+    private int getWindowHeight() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return metrics.heightPixels;
+    }
+
+
 }
