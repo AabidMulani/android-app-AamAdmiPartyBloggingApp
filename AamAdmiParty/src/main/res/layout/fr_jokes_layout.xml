@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:padding="10dip"
         android:background="#80000000">
 
         <in.abmulani.aamadmiparty.widgets.InfoTextView

@@ -8,7 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -41,6 +42,11 @@ public class DetailedContentFragment extends Fragment {
     ImageView imageView;
     @InjectView(R.id.sliding_layout)
     SlidingUpPanelLayout layout;
+    @InjectView(R.id.image_bk_layout)
+    LinearLayout imageBkLayout;
+    @InjectView(R.id.fdv_inner_scroll_view)
+    ScrollView childScrollView;
+
     private ActionBar actionBar;
 
     public static final Fragment newInstance(String imgUrl, String title, String subHeader, String content, String time) {
@@ -82,14 +88,13 @@ public class DetailedContentFragment extends Fragment {
         String dateTime = bundle.getString("time");
         timestampTxt.setText(CommonMethods.convertDateInfo(dateTime.substring(0, 10)));
         contentTxt.setText(bundle.getString("content"));
-        RelativeLayout.LayoutParams params=new RelativeLayout.LayoutParams((int) (BaseApplication.screenWidth * 0.95), (int) (BaseApplication.screenWidth * 0.60));
-        imageView.setLayoutParams(params);
+//        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams((int) (BaseApplication.screenWidth * 0.95), (int) (BaseApplication.screenWidth * 0.60));
+//        imageView.setLayoutParams(params);
         ImageLoader.getInstance().displayImage(AppConstants.IMAGE_BASE_URL + bundle.getString("imgUrl"), imageView, options);
 
-
         actionBar=((DetailedViewActivity)getActivity()).getActionBar();
-
         layout.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));
+        layout.setEnableDragViewTouchEvents(true);
         layout.setAnchorPoint(0.4f);
         layout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
@@ -104,24 +109,29 @@ public class DetailedContentFragment extends Fragment {
                         actionBar.show();
                     }
                 }
+                layout.invalidate();
+                imageBkLayout.invalidate();
             }
 
             @Override
             public void onPanelExpanded(View panel) {
                 Logger.i(TAG, "onPanelExpanded");
-
+                layout.invalidate();
+                imageBkLayout.invalidate();
             }
 
             @Override
             public void onPanelCollapsed(View panel) {
                 Logger.i(TAG, "onPanelCollapsed");
-
+                layout.invalidate();
+                imageBkLayout.invalidate();
             }
 
             @Override
             public void onPanelAnchored(View panel) {
                 Logger.i(TAG, "onPanelAnchored");
-
+                layout.invalidate();
+                imageBkLayout.invalidate();
             }
         });
 
@@ -130,5 +140,21 @@ public class DetailedContentFragment extends Fragment {
         if (actionBarHidden) {
             actionBar.hide();
         }
+
+//        childScrollView.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                Log.v(TAG, "CHILD TOUCH");
+//
+//                return false;
+//            }
+//        });
     }
+
+
 }
+
+//
+
+

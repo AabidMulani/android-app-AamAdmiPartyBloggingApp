@@ -28,4 +28,9 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="light_grey">#EEEEEE</color>
+
+
+    <color name="toast_green">#AA008000</color>
+    <color name="toast_red">#AAFF0000</color>
+    <color name="toast_black">#AA000000</color>
 </resources>

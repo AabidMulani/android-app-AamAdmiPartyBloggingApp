@@ -728,8 +728,10 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
     private boolean collapsePane(View pane, int initialVelocity) {
         if (mFirstLayout || smoothSlideTo(1.f, initialVelocity)) {
+            invalidate();
             return true;
         }
+        invalidate();
         return false;
     }
 
@@ -890,6 +892,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
         if (mDragHelper.smoothSlideViewTo(mSlideableView, mSlideableView.getLeft(), y)) {
             setAllChildrenVisible();
+            invalidate();
             ViewCompat.postInvalidateOnAnimation(this);
             return true;
         }

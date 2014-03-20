@@ -12,21 +12,21 @@ public class DateTextView extends TextView {
 	public DateTextView(Context context) {
 		super(context);
 		Typeface face = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Roboto-Light.ttf");
+				"fonts/Lato-RegIta.ttf");
 		this.setTypeface(face);
 	}
 
 	public DateTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		Typeface face = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Roboto-Light.ttf");
+				"fonts/Lato-RegIta.ttf");
 		this.setTypeface(face);
 	}
 
 	public DateTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		Typeface face = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Roboto-Light.ttf");
+				"fonts/Lato-RegIta.ttf");
 		this.setTypeface(face);
 	}
 

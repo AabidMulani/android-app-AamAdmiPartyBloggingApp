@@ -10,16 +10,19 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.devspark.appmsg.AppMsg;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.markupartist.android.widget.PullToRefreshListView;
@@ -64,6 +67,8 @@ import in.abmulani.aamadmiparty.utils.CommonMethods;
 import in.abmulani.aamadmiparty.utils.LITERALS.CATEGORY;
 import in.abmulani.aamadmiparty.utils.Logger;
 
+import static com.devspark.appmsg.AppMsg.LENGTH_LONG;
+
 /**
  * Created by AABID on 18/3/14.
  */
@@ -89,7 +94,11 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
     private GetNewData asyncCall;
     @InjectView(R.id.al_listview)
     PullToRefreshListView listView;
+    @InjectView(R.id.bottom_loader_layout)
+    LinearLayout loadingLayout;
+
     private DisplayImageOptions options;
+    private boolean loadMoreOldData = true, loadMoreNewData = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +112,8 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
         options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.place_holder).showImageForEmptyUri(R.drawable.place_holder)
                 .showImageOnFail(R.drawable.ic_launcher).resetViewBeforeLoading(false).cacheInMemory(true).cacheOnDisc(true).build();
         readFromDatabaseFirst();
+
+
     }
 
     private void updateActionBar() {
@@ -208,7 +219,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
         }
         listView.setAdapter(listAdaptor);
         if (noDataFound) {
-            new GetNewData(0, selectedCategory, true).execute();
+            new GetNewData(0, selectedCategory, true, CallType.INITIAL).execute();
         }
     }
 
@@ -217,10 +228,10 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Logger.d(TAG, "onItemClick");
         position--;
-        if(selectedCategory== CATEGORY.Videos){
-            Logger.d("YouTube Video Url",contentVideoList.get(position).getVideo_url());
+        if (selectedCategory == CATEGORY.Videos) {
+            Logger.d("YouTube Video Url", contentVideoList.get(position).getVideo_url());
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(contentVideoList.get(position).getVideo_url())));
-        }else {
+        } else {
             Intent intent = new Intent(ListActivity.this, DetailedViewActivity.class);
             intent.putExtra("position", position);
             intent.putExtra("category", selectedCategory);
@@ -258,7 +269,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
             switch (selectedCategory) {
                 case Jokes: {
                     List<Jokes> value = Jokes.findWithQuery(Jokes.class, "SELECT * FROM Jokes ORDER BY id DESC LIMIT 0,1", null);
-                    if (value.size()==0) {
+                    if (value.size() == 0) {
                         Logger.d(TAG, "No values found while retrieving Highest ID for Jokes");
                     } else {
                         startCount = Integer.parseInt(value.get(0).getPost_id());
@@ -268,7 +279,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                 break;
                 case Videos: {
                     List<Videos> value = Videos.findWithQuery(Videos.class, "SELECT * FROM Videos ORDER BY id DESC LIMIT 0,1", null);
-                    if (value.size()==0) {
+                    if (value.size() == 0) {
                         Logger.d(TAG, "No values found while retrieving Highest ID for Videos");
                     } else {
                         startCount = Integer.parseInt(value.get(0).getPost_id());
@@ -280,7 +291,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                     switch (selectedCategory) {
                         case Policies: {
                             List<Policies> value = Policies.findWithQuery(Policies.class, "SELECT * FROM Policies ORDER BY id DESC LIMIT 0,1", null);
-                            if (value.size()==0) {
+                            if (value.size() == 0) {
                                 Logger.d(TAG, "No values found while retrieving Highest ID for Policies");
                             } else {
                                 startCount = Integer.parseInt(value.get(0).getPost_id());
@@ -290,7 +301,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                         break;
                         case PathBreakingNews: {
                             List<Pathbreakingnews> value = Pathbreakingnews.findWithQuery(Pathbreakingnews.class, "SELECT * FROM Pathbreakingnews ORDER BY id DESC LIMIT 0,1", null);
-                            if (value.size()==0) {
+                            if (value.size() == 0) {
                                 Logger.d(TAG, "No values found while retrieving Highest ID for PathBreakingNews");
                             } else {
                                 startCount = Integer.parseInt(value.get(0).getPost_id());
@@ -300,7 +311,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                         break;
                         case AapCelebs: {
                             List<Aapcelebs> value = Aapcelebs.findWithQuery(Aapcelebs.class, "SELECT * FROM Aapcelebs ORDER BY id DESC LIMIT 0,1", null);
-                            if (value.size()==0) {
+                            if (value.size() == 0) {
                                 Logger.d(TAG, "No values found while retrieving Highest ID for AapCelebs");
                             } else {
                                 startCount = Integer.parseInt(value.get(0).getPost_id());
@@ -311,7 +322,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                         case ArvindKejriwal://SELECT * FROM `ArvindKejriwal` ORDER BY `id` DESC LIMIT 0,1
                         {
                             List<Arvindkejriwal> value = Arvindkejriwal.findWithQuery(Arvindkejriwal.class, "SELECT * FROM Arvindkejriwal ORDER BY id DESC LIMIT 0,1", null);
-                            if (value.size()==0) {
+                            if (value.size() == 0) {
                                 Logger.d(TAG, "No values found while retrieving Highest ID for ArvindKejriwal");
                             } else {
                                 startCount = Integer.parseInt(value.get(0).getPost_id());
@@ -321,7 +332,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                         break;
                         case CampaignInnovation: {
                             List<Campaigninnovation> value = Campaigninnovation.findWithQuery(Campaigninnovation.class, "SELECT * FROM Campaigninnovation ORDER BY id DESC LIMIT 0,1", null);
-                            if (value.size()==0) {
+                            if (value.size() == 0) {
                                 Logger.d(TAG, "No values found while retrieving Highest ID for CampaignInnovation");
                             } else {
                                 startCount = Integer.parseInt(value.get(0).getPost_id());
@@ -331,7 +342,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                         break;
                         case History: {
                             List<History> value = History.findWithQuery(History.class, "SELECT * FROM History ORDER BY id DESC LIMIT 0,1", null);
-                            if (value.size()==0) {
+                            if (value.size() == 0) {
                                 Logger.d(TAG, "No values found while retrieving Highest ID for History");
                             } else {
                                 startCount = Integer.parseInt(value.get(0).getPost_id());
@@ -341,7 +352,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                         break;
                         case Leaders: {
                             List<Leaders> value = Leaders.findWithQuery(Leaders.class, "SELECT * FROM Leaders ORDER BY id DESC LIMIT 0,1", null);
-                            if (value.size()==0) {
+                            if (value.size() == 0) {
                                 Logger.d(TAG, "No values found while retrieving Highest ID for Leaders");
                             } else {
                                 startCount = Integer.parseInt(value.get(0).getPost_id());
@@ -351,7 +362,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                         break;
                         case LokSabha2014: {
                             List<Loksabha> value = Loksabha.findWithQuery(Loksabha.class, "SELECT * FROM Loksabha ORDER BY id DESC LIMIT 0,1", null);
-                            if (value.size()==0) {
+                            if (value.size() == 0) {
                                 Logger.d(TAG, "No values found while retrieving Highest ID for LokSabha2014");
                             } else {
                                 startCount = Integer.parseInt(value.get(0).getPost_id());
@@ -365,7 +376,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
             ex.printStackTrace();
             startCount = 0;
         }
-        new GetNewData(startCount, selectedCategory, false).execute();
+        new GetNewData(startCount, selectedCategory, false, CallType.NEW).execute();
     }
 
     class GetNewData extends AsyncTask<Void, Void, Boolean> {
@@ -377,27 +388,34 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
         private int startCount;
         private CATEGORY category;
         private boolean blocking;
+        CallType callType;
 
-        public GetNewData(int startCount, CATEGORY category, boolean blocking) {
+        public GetNewData(int startCount, CATEGORY category, boolean blocking, CallType callType) {
             Logger.d(TAG, "GetNewData");
             this.startCount = startCount;
             this.category = category;
             asyncCall = this;
             this.blocking = blocking;
+            this.callType = callType;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            if (blocking) {
-                progressDialog = new ProgressDialog(ListActivity.this);
-                progressDialog.setCancelable(false);
-                progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.setMessage("Loading initial data..");
-                progressDialog.setIndeterminate(true);
-                progressDialog.show();
+            isLoading = true;
+            if (callType == CallType.OLD) {
+                loadingLayout.setVisibility(View.VISIBLE);
             } else {
-                listView.prepareForRefresh();
+                if (blocking) {
+                    progressDialog = new ProgressDialog(ListActivity.this);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.setMessage("Loading initial data..");
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.show();
+                } else {
+                    listView.prepareForRefresh();
+                }
             }
         }
 
@@ -412,6 +430,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                     nameValuePairs.add(new BasicNameValuePair("category", category.name()));
                     nameValuePairs.add(new BasicNameValuePair("limit", String.valueOf(PAGE_LIMIT)));
                     nameValuePairs.add(new BasicNameValuePair("id", String.valueOf(startCount)));
+                    nameValuePairs.add(new BasicNameValuePair("call_type", callType.name()));
                     Logger.d("REQUEST: ", nameValuePairs.toString());
                     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     HttpResponse response = httpclient.execute(httppost);
@@ -430,34 +449,55 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            if (blocking) {
-                progressDialog.dismiss();
+            isLoading = false;
+            if (callType == CallType.OLD) {
+                loadingLayout.setVisibility(View.GONE);
             } else {
-                listView.onRefreshComplete();
+                if (blocking) {
+                    progressDialog.dismiss();
+                } else {
+                    listView.onRefreshComplete();
+                }
             }
             if (result) {
                 try {
-                    if(resultString.trim().equals("NONE")){
+                    if (resultString.trim().equals("NONE")) {
                         //TODO show proper msg here
-                        Toast.makeText(ListActivity.this,"List is Up To Date.",Toast.LENGTH_LONG).show();
-                    }else {
-                        parseAndStoreInDB("{\"result_Content\":" + resultString + "}", category);
+                        AppMsg infoMsg=AppMsg.makeText(ListActivity.this,"List is Up To Date.", new AppMsg.Style(LENGTH_LONG, R.color.toast_green));
+                        infoMsg.setPriority(5);
+                        infoMsg.setLayoutGravity(Gravity.BOTTOM);
+                        infoMsg.show();
+                    } else {
+                        if (callType == CallType.OLD) {
+                            loadMoreOldData = parseAndStoreInDB("{\"result_Content\":" + resultString + "}", category, callType);
+                        }else{
+                            parseAndStoreInDB("{\"result_Content\":" + resultString + "}", category, callType);
+                        }
                     }
                 } catch (Exception e) {
-                    CommonMethods.showToast(ListActivity.this, "NO DATA.");
+                    AppMsg infoMsg=AppMsg.makeText(ListActivity.this, "NO DATA.", new AppMsg.Style(LENGTH_LONG, R.color.toast_red));
+                    infoMsg.setPriority(7);
+                    infoMsg.setLayoutGravity(Gravity.BOTTOM);
+                    infoMsg.show();
                     e.printStackTrace();
                 }
             } else {
                 if (internet) {
-                    CommonMethods.showToast(ListActivity.this, errorString);
+                    AppMsg infoMsg=AppMsg.makeText(ListActivity.this, errorString, new AppMsg.Style(LENGTH_LONG, R.color.toast_red));
+                    infoMsg.setPriority(7);
+                    infoMsg.setLayoutGravity(Gravity.BOTTOM);
+                    infoMsg.show();
                 } else {
-                    CommonMethods.showToast(ListActivity.this, "No Network Available..");
+                    AppMsg infoMsg=AppMsg.makeText(ListActivity.this, "No Network Available..", new AppMsg.Style(LENGTH_LONG, R.color.toast_black));
+                    infoMsg.setPriority(7);
+                    infoMsg.setLayoutGravity(Gravity.BOTTOM);
+                    infoMsg.show();
                 }
             }
         }
     }
 
-    private void parseAndStoreInDB(String resultString, CATEGORY selectedCategory) {
+    private boolean parseAndStoreInDB(String resultString, CATEGORY selectedCategory, CallType callType) {
         Logger.d(TAG, "parseAndStoreInDB");
         String TAG = "SAVING";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
@@ -467,11 +507,20 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                 ResultListJokes retrievedList = gson.fromJson(resultString, ResultListJokes.class);
                 Logger.d("Length", retrievedList.getResultContent().size() + "");
                 if (retrievedList.getResultContent().size() > 0) {
+                    List<Jokes> tmp;
+                    if (callType == CallType.OLD) {
+                        tmp = contentJokesList;
+                        contentJokesList.clear();
+                    }
                     for (ResultJokes result : retrievedList.getResultContent()) {
                         Logger.d(TAG, "Jokes:postId" + result.getPost_id());
                         Jokes jokes = new Jokes(ListActivity.this, result);
                         jokes.save();
                         contentJokesList.add(jokes);
+                    }
+                    if (callType == CallType.OLD) {
+                        tmp = contentJokesList;
+                        contentJokesList.addAll(tmp);
                     }
                 }
             }
@@ -480,11 +529,20 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                 ResultListVideo retrievedList = gson.fromJson(resultString, ResultListVideo.class);
                 Logger.d("Length", retrievedList.getResultContent().size() + "");
                 if (retrievedList.getResultContent().size() > 0) {
+                    List<Videos> tmp;
+                    if (callType == CallType.OLD) {
+                        tmp = contentVideoList;
+                        contentVideoList.clear();
+                    }
                     for (ResultVideo result : retrievedList.getResultContent()) {
                         Logger.d(TAG, "Videos:postId" + result.getPost_id());
                         Videos videos = new Videos(ListActivity.this, result);
                         videos.save();
                         contentVideoList.add(videos);
+                    }
+                    if (callType == CallType.OLD) {
+                        tmp = contentVideoList;
+                        contentVideoList.addAll(tmp);
                     }
                 }
             }
@@ -495,81 +553,153 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
                 switch (selectedCategory) {
                     case Policies:
                         if (retrievedList.getResultContent().size() > 0) {
+                            List<Policies> tmp;
+                            if (callType == CallType.OLD) {
+                                tmp = contentPoliciesList;
+                                contentPoliciesList.clear();
+                            }
                             for (ResultContent result : retrievedList.getResultContent()) {
                                 Logger.d(TAG, "Policies:postId" + result.getPost_id());
                                 Policies mPolicies = new Policies(ListActivity.this, result);
                                 mPolicies.save();
                                 contentPoliciesList.add(mPolicies);
                             }
+                            if (callType == CallType.OLD) {
+                                tmp = contentPoliciesList;
+                                contentPoliciesList.addAll(tmp);
+                            }
                         }
                         break;
                     case PathBreakingNews:
                         if (retrievedList.getResultContent().size() > 0) {
+                            List<Pathbreakingnews> tmp;
+                            if (callType == CallType.OLD) {
+                                tmp = contentPathBreakingNewsList;
+                                contentPathBreakingNewsList.clear();
+                            }
                             for (ResultContent result : retrievedList.getResultContent()) {
                                 Logger.d(TAG, "Pathbreakingnews:postId" + result.getPost_id());
                                 Pathbreakingnews mPathBreakingNews = new Pathbreakingnews(ListActivity.this, result);
                                 mPathBreakingNews.save();
                                 contentPathBreakingNewsList.add(mPathBreakingNews);
                             }
+                            if (callType == CallType.OLD) {
+                                tmp = contentPathBreakingNewsList;
+                                contentPathBreakingNewsList.addAll(tmp);
+                            }
                         }
                         break;
                     case AapCelebs:
                         if (retrievedList.getResultContent().size() > 0) {
+                            List<Aapcelebs> tmp;
+                            if (callType == CallType.OLD) {
+                                tmp = contentAppCelebsist;
+                                contentAppCelebsist.clear();
+                            }
                             for (ResultContent result : retrievedList.getResultContent()) {
                                 Logger.d(TAG, "Aapcelebs:postId" + result.getPost_id());
                                 Aapcelebs mAapCelebs = new Aapcelebs(ListActivity.this, result);
                                 mAapCelebs.save();
                                 contentAppCelebsist.add(mAapCelebs);
                             }
+                            if (callType == CallType.OLD) {
+                                tmp = contentAppCelebsist;
+                                contentAppCelebsist.addAll(tmp);
+                            }
                         }
                         break;
                     case ArvindKejriwal:
                         if (retrievedList.getResultContent().size() > 0) {
+                            List<Arvindkejriwal> tmp;
+                            if (callType == CallType.OLD) {
+                                tmp = contentArvindKejriwalList;
+                                contentArvindKejriwalList.clear();
+                            }
                             for (ResultContent result : retrievedList.getResultContent()) {
                                 Logger.d(TAG, "Arvindkejriwal:postId" + result.getPost_id());
                                 Arvindkejriwal mArvindKejriwal = new Arvindkejriwal(ListActivity.this, result);
                                 mArvindKejriwal.save();
                                 contentArvindKejriwalList.add(mArvindKejriwal);
                             }
+                            if (callType == CallType.OLD) {
+                                tmp = contentArvindKejriwalList;
+                                contentArvindKejriwalList.addAll(tmp);
+                            }
                         }
                         break;
                     case CampaignInnovation:
                         if (retrievedList.getResultContent().size() > 0) {
+                            List<Campaigninnovation> tmp;
+                            if (callType == CallType.OLD) {
+                                tmp = contentCampaignInnovationList;
+                                contentCampaignInnovationList.clear();
+                            }
                             for (ResultContent result : retrievedList.getResultContent()) {
                                 Logger.d(TAG, "Campaigninnovation:postId" + result.getPost_id());
                                 Campaigninnovation mCampaignInnovation = new Campaigninnovation(ListActivity.this, result);
                                 mCampaignInnovation.save();
                                 contentCampaignInnovationList.add(mCampaignInnovation);
                             }
+                            if (callType == CallType.OLD) {
+                                tmp = contentCampaignInnovationList;
+                                contentCampaignInnovationList.addAll(tmp);
+                            }
                         }
                         break;
                     case History:
                         if (retrievedList.getResultContent().size() > 0) {
+                            List<History> tmp;
+                            if (callType == CallType.OLD) {
+                                tmp = contentHistoryList;
+                                contentHistoryList.clear();
+                            }
                             for (ResultContent result : retrievedList.getResultContent()) {
                                 Logger.d(TAG, "History:postId" + result.getPost_id());
                                 History mHistory = new History(ListActivity.this, result);
                                 mHistory.save();
                                 contentHistoryList.add(mHistory);
                             }
+                            if (callType == CallType.OLD) {
+                                tmp = contentHistoryList;
+                                contentHistoryList.addAll(tmp);
+                            }
                         }
                         break;
                     case Leaders:
                         if (retrievedList.getResultContent().size() > 0) {
+                            List<Leaders> tmp;
+                            if (callType == CallType.OLD) {
+                                tmp = contentLeadersList;
+                                contentLeadersList.clear();
+                            }
                             for (ResultContent result : retrievedList.getResultContent()) {
                                 Logger.d(TAG, "Leaders:postId" + result.getPost_id());
                                 Leaders mLeaders = new Leaders(ListActivity.this, result);
                                 mLeaders.save();
                                 contentLeadersList.add(mLeaders);
                             }
+                            if (callType == CallType.OLD) {
+                                tmp = contentLeadersList;
+                                contentLeadersList.addAll(tmp);
+                            }
                         }
                         break;
                     case LokSabha2014:
                         if (retrievedList.getResultContent().size() > 0) {
+                            List<Loksabha> tmp;
+                            if (callType == CallType.OLD) {
+                                tmp = contentLokSabha2014List;
+                                contentLokSabha2014List.clear();
+                            }
                             for (ResultContent result : retrievedList.getResultContent()) {
                                 Logger.d(TAG, "Loksabha:postId" + result.getPost_id());
                                 Loksabha mLokSabha2014 = new Loksabha(ListActivity.this, result);
                                 mLokSabha2014.save();
                                 contentLokSabha2014List.add(mLokSabha2014);
+                            }
+                            if (callType == CallType.OLD) {
+                                tmp = contentLokSabha2014List;
+                                contentLokSabha2014List.addAll(tmp);
                             }
                         }
                         break;
@@ -577,6 +707,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
         }
         listView.setAdapter(listAdaptor);
         stopAnimating();
+        return contentLokSabha2014List.size() < PAGE_LIMIT ? false : true;
     }
 
     private void startAnimating() {
@@ -814,4 +945,164 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
         }
     }
 
+    private boolean isLoading;
+    android.widget.AbsListView.OnScrollListener listScrollListener = new AbsListView
+            .OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
+                             int totalItemCount) {
+            if (listView.getAdapter() == null) {
+                return;
+            }
+
+            if (listView.getAdapter().getCount() == 0) {
+                return;
+            }
+
+            if (contentAdaptorList == null || contentAdaptorList.size() == 0) {
+                return;
+            }
+
+            int itemCount = visibleItemCount + firstVisibleItem;
+            if (itemCount >= totalItemCount && !isLoading && loadMoreOldData) {
+                // It is time to add new data.
+                isLoading = true;
+                getMoreBottomData();
+            }
+        }
+    };
+
+
+    private void getMoreBottomData() {
+        int endCount = -1;
+        try {
+            switch (selectedCategory) {
+                case Jokes: {
+                    List<Jokes> value = Jokes.findWithQuery(Jokes.class, "SELECT * FROM Jokes ORDER BY id LIMIT 0,1", null);
+                    if (value.size() == 0) {
+                        Logger.d(TAG, "No values found while retrieving Lowest ID for Jokes");
+                    } else {
+                        endCount = Integer.parseInt(value.get(0).getPost_id());
+                        Logger.d(TAG, "Lowest ID for Jokes : " + endCount);
+                    }
+                }
+                break;
+                case Videos: {
+                    List<Videos> value = Videos.findWithQuery(Videos.class, "SELECT * FROM Videos ORDER BY id LIMIT 0,1", null);
+                    if (value.size() == 0) {
+                        Logger.d(TAG, "No values found while retrieving Lowest ID for Videos");
+                    } else {
+                        endCount = Integer.parseInt(value.get(0).getPost_id());
+                        Logger.d(TAG, "Lowest ID for Videos : " + endCount);
+                    }
+                }
+                break;
+                default:
+                    switch (selectedCategory) {
+                        case Policies: {
+                            List<Policies> value = Policies.findWithQuery(Policies.class, "SELECT * FROM Policies ORDER BY id LIMIT 0,1", null);
+                            if (value.size() == 0) {
+                                Logger.d(TAG, "No values found while retrieving Lowest ID for Policies");
+                            } else {
+                                endCount = Integer.parseInt(value.get(0).getPost_id());
+                                Logger.d(TAG, "Lowest ID for Policies : " + endCount);
+                            }
+                        }
+                        break;
+                        case PathBreakingNews: {
+                            List<Pathbreakingnews> value = Pathbreakingnews.findWithQuery(Pathbreakingnews.class, "SELECT * FROM Pathbreakingnews ORDER BY id LIMIT 0,1", null);
+                            if (value.size() == 0) {
+                                Logger.d(TAG, "No values found while retrieving Lowest ID for PathBreakingNews");
+                            } else {
+                                endCount = Integer.parseInt(value.get(0).getPost_id());
+                                Logger.d(TAG, "Lowest ID for PathBreakingNews : " + endCount);
+                            }
+                        }
+                        break;
+                        case AapCelebs: {
+                            List<Aapcelebs> value = Aapcelebs.findWithQuery(Aapcelebs.class, "SELECT * FROM Aapcelebs ORDER BY id LIMIT 0,1", null);
+                            if (value.size() == 0) {
+                                Logger.d(TAG, "No values found while retrieving Lowest ID for AapCelebs");
+                            } else {
+                                endCount = Integer.parseInt(value.get(0).getPost_id());
+                                Logger.d(TAG, "Lowest ID for AapCelebs : " + endCount);
+                            }
+                        }
+                        break;
+                        case ArvindKejriwal://SELECT * FROM `ArvindKejriwal` ORDER BY `id` DESC LIMIT 0,1
+                        {
+                            List<Arvindkejriwal> value = Arvindkejriwal.findWithQuery(Arvindkejriwal.class, "SELECT * FROM Arvindkejriwal ORDER BY id LIMIT 0,1", null);
+                            if (value.size() == 0) {
+                                Logger.d(TAG, "No values found while retrieving Lowest ID for ArvindKejriwal");
+                            } else {
+                                endCount = Integer.parseInt(value.get(0).getPost_id());
+                                Logger.d(TAG, "Lowest ID for ArvindKejriwal : " + endCount);
+                            }
+                        }
+                        break;
+                        case CampaignInnovation: {
+                            List<Campaigninnovation> value = Campaigninnovation.findWithQuery(Campaigninnovation.class, "SELECT * FROM Campaigninnovation ORDER BY id LIMIT 0,1", null);
+                            if (value.size() == 0) {
+                                Logger.d(TAG, "No values found while retrieving Lowest ID for CampaignInnovation");
+                            } else {
+                                endCount = Integer.parseInt(value.get(0).getPost_id());
+                                Logger.d(TAG, "Lowest ID for CampaignInnovation : " + endCount);
+                            }
+                        }
+                        break;
+                        case History: {
+                            List<History> value = History.findWithQuery(History.class, "SELECT * FROM History ORDER BY id LIMIT 0,1", null);
+                            if (value.size() == 0) {
+                                Logger.d(TAG, "No values found while retrieving Lowest ID for History");
+                            } else {
+                                endCount = Integer.parseInt(value.get(0).getPost_id());
+                                Logger.d(TAG, "Lowest ID for History : " + endCount);
+                            }
+                        }
+                        break;
+                        case Leaders: {
+                            List<Leaders> value = Leaders.findWithQuery(Leaders.class, "SELECT * FROM Leaders ORDER BY id LIMIT 0,1", null);
+                            if (value.size() == 0) {
+                                Logger.d(TAG, "No values found while retrieving Lowest ID for Leaders");
+                            } else {
+                                endCount = Integer.parseInt(value.get(0).getPost_id());
+                                Logger.d(TAG, "Lowest ID for Leaders : " + endCount);
+                            }
+                        }
+                        break;
+                        case LokSabha2014: {
+                            List<Loksabha> value = Loksabha.findWithQuery(Loksabha.class, "SELECT * FROM Loksabha ORDER BY id LIMIT 0,1", null);
+                            if (value.size() == 0) {
+                                Logger.d(TAG, "No values found while retrieving Lowest ID for LokSabha2014");
+                            } else {
+                                endCount = Integer.parseInt(value.get(0).getPost_id());
+                                Logger.d(TAG, "Lowest ID for LokSabha2014 : " + endCount);
+                            }
+                        }
+                        break;
+                    }
+            }
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+            isLoading = false;
+            return;
+        }
+
+        if (endCount == -1) {
+            isLoading = false;
+            return;
+        } else {
+            new GetNewData(endCount, selectedCategory, false, CallType.OLD).execute();
+        }
+    }
+
+
+    public enum CallType {
+        INITIAL, NEW, OLD
+    }
 }
