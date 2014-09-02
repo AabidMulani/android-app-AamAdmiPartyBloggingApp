@@ -12,21 +12,21 @@ public class HeaderTextView extends TextView {
 	public HeaderTextView(Context context) {
 		super(context);
 		Typeface face = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Roboto-Bold.ttf");
+				"fonts/Lato-Reg.ttf");
 		this.setTypeface(face);
 	}
 
 	public HeaderTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		Typeface face = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Roboto-Bold.ttf");
+				"fonts/Lato-Reg.ttf");
 		this.setTypeface(face);
 	}
 
 	public HeaderTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		Typeface face = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Roboto-Bold.ttf");
+				"fonts/Lato-Reg.ttf");
 		this.setTypeface(face);
 	}
 

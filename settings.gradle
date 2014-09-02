@@ -1,1 +1,1 @@
-include ':AamAdmiParty'
+include ':AamAdmiParty', ':PullToRefreshLibrary', ':PhotoViewLibrary', ':SlidingUpPanel', 'AppMsgLibrary'

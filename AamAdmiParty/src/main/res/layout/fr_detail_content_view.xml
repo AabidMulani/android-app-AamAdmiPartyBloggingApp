@@ -1,0 +1,110 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DemoActivity">
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sliding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        sothree:collapsedHeight="200dp"
+        sothree:shadowHeight="4dp"
+        android:overScrollMode="never"
+        sothree:flingVelocity="100"
+        sothree:dragView="@+id/bottom_layout_1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="#99848482"
+            android:id="@+id/image_bk_layout">
+
+            <in.abmulani.aamadmiparty.widgets.RatioImageView
+                android:id="@+id/main_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#eee"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:id="@+id/bottom_layout"
+            android:focusable="false">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bottom_layout_1"
+                android:paddingTop="15dip"
+                android:paddingLeft="15dip"
+                android:paddingRight="15dip"
+                android:paddingBottom="5dip">
+
+                <in.abmulani.aamadmiparty.widgets.HeaderTextView
+                    android:id="@+id/fdv_title_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Large Text"
+                    android:textSize="19sp" />
+
+                <in.abmulani.aamadmiparty.widgets.DateTextView
+                    android:id="@+id/fdv_subheader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="5dip"
+                    android:layout_below="@+id/fdv_title_txt"
+                    android:text="Large Text"
+                    android:textSize="17sp" />
+
+                <in.abmulani.aamadmiparty.widgets.TitleTextView
+                    android:id="@+id/fdv_created_on"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@+id/fdv_title_txt"
+                    android:layout_below="@+id/fdv_subheader"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="5dip"
+                    android:text="Small Text"
+                    android:textColor="#848482"
+                    android:textSize="11sp" />
+            </RelativeLayout>
+
+            <ScrollView
+                android:id="@+id/fdv_inner_scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:paddingLeft="15dip"
+                android:paddingRight="15dip"
+                android:fillViewport="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <in.abmulani.aamadmiparty.widgets.InfoTextView
+                        android:id="@+id/fdv_main_content"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="15dp"
+                        android:singleLine="false"
+                        android:gravity="fill_horizontal"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+            </ScrollView>
+        </LinearLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+</RelativeLayout>

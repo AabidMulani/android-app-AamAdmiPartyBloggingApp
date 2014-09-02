@@ -12,21 +12,21 @@ public class InfoTextView extends TextView {
 	public InfoTextView(Context context) {
 		super(context);
 		Typeface face = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Roboto-Regular.ttf");
+				"fonts/Lato-Reg.ttf");
 		this.setTypeface(face);
 	}
 
 	public InfoTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		Typeface face = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Roboto-Regular.ttf");
+				"fonts/Lato-Reg.ttf");
 		this.setTypeface(face);
 	}
 
 	public InfoTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		Typeface face = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Roboto-Regular.ttf");
+				"fonts/Lato-Reg.ttf");
 		this.setTypeface(face);
 	}
 

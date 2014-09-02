@@ -1,15 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@color/light_grey"
+    android:layout_height="match_parent">
 
-    <ListView
+    <com.markupartist.android.widget.PullToRefreshListView
         android:id="@+id/al_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
-    </ListView>
+        android:layout_below="@+id/al_sep_line"
+        android:background="@color/light_grey"
+        android:divider="@color/light_grey"
+        android:padding="5dip"
+        android:dividerHeight="5dip"
+        android:layout_above="@+id/bottom_loader_layout"></com.markupartist.android.widget.PullToRefreshListView>
+
+    <View
+        android:id="@+id/al_sep_line"
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="#C7C7C7" />
+
+    <LinearLayout
+        android:id="@+id/bottom_loader_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="10dip"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Loading.."
+            android:id="@+id/textView"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

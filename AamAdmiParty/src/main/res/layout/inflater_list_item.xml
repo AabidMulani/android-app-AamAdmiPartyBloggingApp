@@ -19,17 +19,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left"
+            android:singleLine="true"
+            android:textColor="#000"
+            android:text="Medium Text"
+            android:textSize="14sp" />
+
+        <in.abmulani.aamadmiparty.widgets.InfoTextView
+            android:id="@+id/ili_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Small Text"
             android:maxLines="2"
             android:minLines="2"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginTop="4dip"
+            android:textColor="#504A4B"
+            android:textSize="12sp" />
 
         <in.abmulani.aamadmiparty.widgets.DateTextView
             android:id="@+id/ili_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:layout_marginTop="4dip"
+            android:textColor="#848482"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <ImageView
@@ -37,7 +50,6 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.3"
-        android:scaleType="centerCrop"
-        android:src="@drawable/image_place_holder" />
+        android:layout_margin="3dip" />
 
 </LinearLayout>

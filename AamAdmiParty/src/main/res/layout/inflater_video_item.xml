@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/list_item_selector">
+
+        <ImageView
+            android:id="@+id/ili_image"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:layout_margin="3dip" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:orientation="vertical"
+        android:paddingBottom="14dp"
+        android:paddingLeft="14dp"
+        android:paddingTop="14dp" >
+
+        <in.abmulani.aamadmiparty.widgets.ListHeaderTextView
+            android:id="@+id/ili_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:maxLines="2"
+            android:minLines="2"
+            android:textColor="#000"
+            android:text="Medium Text"
+            android:textSize="14sp" />
+
+        <in.abmulani.aamadmiparty.widgets.DateTextView
+            android:id="@+id/ili_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Small Text"
+            android:layout_marginTop="4dip"
+            android:textColor="#848482"
+            android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>

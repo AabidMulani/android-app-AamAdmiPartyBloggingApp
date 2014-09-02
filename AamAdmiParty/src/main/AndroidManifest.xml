@@ -22,15 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data android:name="DATABASE" android:value="aam_aadmi_party.db" />
+        <meta-data android:name="VERSION" android:value="1" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="in.abmulani.aamadmiparty" />
+
         <activity
             android:name="in.abmulani.aamadmiparty.activities.MenuScreen"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
         <activity
-            android:name="in.abmulani.aamadmiparty.activities.ListAllDataActivity"
-            android:label="@string/app_name"></activity>
-        <activity
-            android:name="in.abmulani.aamadmiparty.activities.List_ArvindKejriwal"
+            android:name=".activities.ListActivity"
             android:label="@string/app_name"></activity>
         <activity
             android:name="in.abmulani.aamadmiparty.activities.DetailedViewActivity"
